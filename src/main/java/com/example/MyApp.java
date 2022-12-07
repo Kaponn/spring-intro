@@ -1,19 +1,20 @@
 package com.example;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MyApp {
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
 
-        MessageService messageService = applicationContext.getBean("messageService", MessageService.class);
+        applicationContext.register(MyNameMessageConfig.class, RandomTextMessageConfig.class);
+        applicationContext.refresh();
 
-        MessageService messageService2 = applicationContext.getBean("messageService", MessageService.class);
+        MessageService messageService = applicationContext.getBean(MyNameMessageService.class);
 
-        System.out.println(messageService.getMessage().hashCode());
-        System.out.println(messageService2.getMessage().hashCode());
+        MessageService messageService2 = applicationContext.getBean(RandomTextMessageService.class);
 
-        applicationContext.close();
+        System.out.println(messageService.getMessage());
+        System.out.println(messageService2.getMessage());
     }
 }
