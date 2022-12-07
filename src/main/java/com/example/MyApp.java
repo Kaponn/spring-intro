@@ -9,7 +9,10 @@ public class MyApp {
 
         MessageService messageService = applicationContext.getBean("messageService", MessageService.class);
 
-        System.out.println(messageService.getMessage());
+        MessageService messageService2 = applicationContext.getBean("messageService", MessageService.class);
+
+        System.out.println(messageService.getMessage().hashCode());
+        System.out.println(messageService2.getMessage().hashCode());
 
         applicationContext.close();
     }
